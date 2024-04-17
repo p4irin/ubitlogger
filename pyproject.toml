@@ -49,6 +49,7 @@ dev = [
 ]
 
 [project.scripts]
+ubitlogger = "ubitlogger.cli:cli"
 
 [project.urls]
 "Homepage" = "https://github.com/p4irin/ubitlogger"
