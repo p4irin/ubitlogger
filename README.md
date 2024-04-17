@@ -8,3 +8,7 @@
 # ubitlogger
 
 A micro:bit serial port logger
+
+## Using ubitlogger from a linux distro on WSL 2
+
+Connect a USB device to your linux distro on WSL 2 using [usbipd-win](https://github.com/dorssel/usbipd-win)
