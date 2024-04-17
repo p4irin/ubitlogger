@@ -1,5 +1,5 @@
 import argparse
-from . import UBitLogger, __version__
+from . import UBitLogger, NoUBitFound, __version__
 
 
 def cli() -> None:
@@ -54,5 +54,8 @@ def cli() -> None:
             timeout_flag = args.timeout
             kwargs['timeout'] = timeout_flag
 
-    ubitlogger = UBitLogger(**kwargs)
-    ubitlogger.start()
+    try:
+        ubitlogger = UBitLogger(**kwargs)
+        ubitlogger.start()
+    except NoUBitFound:
+        print("No micro:bit found ! Is it plugged ?")
