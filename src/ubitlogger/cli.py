@@ -58,4 +58,4 @@ def cli() -> None:
         ubitlogger = UBitLogger(**kwargs)
         ubitlogger.start()
     except NoUBitFound:
-        print("No micro:bit found ! Is it plugged ?")
+        print("No micro:bit found ! Is it plugged in ?")
