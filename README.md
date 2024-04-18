@@ -12,3 +12,42 @@ A micro:bit serial port logger
 ## Using ubitlogger from a linux distro on WSL 2
 
 Connect a USB device to your linux distro on WSL 2 using [usbipd-win](https://github.com/dorssel/usbipd-win)
+
+List USB devices
+
+```powershell
+PS C:\Users\p4irin> usbipd list --usbids
+
+Connected:
+BUSID  VID:PID  DEVICE                          STATE
+1-1    046d:c534  Logitech, Inc., NanoReceiver  Not shared
+1-3    0d28:0204  NXP, ARM  mbed                Not Shared
+...
+```
+
+Register/bind a USB device for sharing. Device "NXP, ARM mbed" with busid _1-3_ identifies our micro:bit:
+
+```powershell
+PS C:\Users\p4irin> usbipd bind --busid 1-3
+```
+
+If you list USB devices again, the microbit wil show up as _Shared_:
+
+```powershell
+PS C:\Users\p4irin> usbipd list --usbids
+```
+
+Attach the USB device to WSL:
+
+```powershell
+PS C:\Users\p4irin> usbipd attach --wsl --busid 1-3
+
+usbipd: info: Using WSL distribution 'Ubuntu-22.04' to attach; the device will be available in all WSL 2 distributions.
+usbipd: info: Using IP address 172.21.144.1 to reach the host.
+```
+
+To detach the device from WSL:
+
+```powershell
+PS C:\Users\p4irin> usbipd detach --busid 1-3
+```
