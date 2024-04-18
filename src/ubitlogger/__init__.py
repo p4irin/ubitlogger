@@ -6,7 +6,7 @@ __email__ = 'p4irin.github.io@gmail.com'
 __version__ = '0.2.0'
 
 
-from threading import Thread, Event
+from threading import Thread, Event, enumerate
 from signal import signal, SIGINT, SIGTERM
 from time import sleep
 from serial import Serial
@@ -21,6 +21,10 @@ def _exit_gracefully(signum, frame):
             msg = "Exited by SIGTERM\n"
         msg += "Cleaning up thread\n"
         _stop_event.set()
+        for thread in enumerate():
+            if thread.name == "listening_thread":
+                msg += "--> Waiting for thread to finish."
+                thread.join()
     else:
         msg = f"Received signal: {signum}"
     print(msg)
@@ -46,13 +50,15 @@ class UBitLogger(object):
             self, handler = None,
             baudrate: int = 115200,
             timeout: float = 0.1,
-            debug: bool = False
+            debug: bool = False,
+            block: bool = True
             ) -> None:
         
         self._debug = debug
         self.handler = handler or self._default_handler
         self._baudrate = baudrate
         self._timeout = timeout
+        self._block = block
         self._serial_port = self._scan()
 
     def _default_handler(self, line:str):
@@ -84,6 +90,7 @@ class UBitLogger(object):
                 line = self._serial_port.readline().decode('utf-8').strip()
                 self.handler(line)
             sleep(2)
+        self._serial_port.close()
 
     def start(self):
         if self._debug:
@@ -95,9 +102,11 @@ class UBitLogger(object):
             print(f"Parity: {connection.parity}")
             print(f"timeout: {connection.timeout}")
 
-        thread = Thread(target=self._listen)
-        thread.start()
-        thread.join()
+        thread = Thread(target=self._listen, name="listening_thread")
+        self._thread = thread
+        self._thread.start()
+        if self._block:
+            self._thread.join()
     
     def stop(self):
         _stop_event.set()
