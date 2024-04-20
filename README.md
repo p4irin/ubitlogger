@@ -9,6 +9,60 @@
 
 A micro:bit serial port logger
 
+## Installation
+
+### From PyPI
+
+```bash
+(venv) $ pip install ubitlogger
+(venv) $
+```
+
+### or from GitHub
+
+```bash
+(venv) $ pip install git+https://github.com/p4irin/ubitlogger.git
+(venv) $
+```
+
+## Usage
+
+```bash
+# Show version
+(venv) $ ubitlogger -V
+x.y.x
+
+# Show help
+(venv) $ ubitlogger -h
+usage: ubitlogger [-h] [-V] {start} ...
+
+micro:bit serial port logger
+
+options:
+  -h, --help     show this help message and exit
+  -V, --version  show version and exit.
+
+Sub commands:
+  {start}
+    start        start logging
+
+# Show help on start sub command
+(venv) $ ubitlogger start -h
+usage: ubitlogger start [-h] [-d] [-t TIMEOUT]
+
+options:
+  -h, --help            show this help message and exit
+  -d, --debug           show debugging output
+  -t TIMEOUT, --timeout TIMEOUT
+                        set a timeout (float)
+
+# Log to the console with defaults
+(venv) $ ubitlogger start
+
+# Log to a file
+(venv) $ ubitlogger start > data.log
+```
+
 ## Using ubitlogger from a linux distro on WSL 2
 
 Connect a USB device to your linux distro on WSL 2 using [usbipd-win](https://github.com/dorssel/usbipd-win)
@@ -106,3 +160,9 @@ To detach the device from WSL:
 ```powershell
 PS C:\Users\p4irin> usbipd detach --busid 1-3
 ```
+
+## Reference
+
+* [pySerial](https://pythonhosted.org/pyserial/)
+* [usbipd-win](https://github.com/dorssel/usbipd-win)
+* [micro:bit 1.3x](https://tech.microbit.org/hardware/1-3-revision/)
