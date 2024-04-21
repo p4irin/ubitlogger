@@ -9,6 +9,19 @@
 
 A micro:bit serial port logger
 
+## Stack
+
+- Python 3.8, 3.9, 3.10
+- Ubuntu 22.04 LTS jammy on
+    - WSL 2 on Windows 11
+        - usbipd-win to attach micro:bit to WSL
+    - Raspberry Pi 4B, 8GB
+- micro:bit
+    - Board revision 1.3B
+    - Bootloader 02xx
+    - Interface 0253
+    - See [update daplink version](https://tech.microbit.org/software/daplink-interface/#:~:text=It%20is%20possible%20to%20update%20the%20version%20of%20DAPLink%20running%20on%20your%20micro%3Abit)
+
 ## Installation
 
 ### From PyPI
@@ -58,6 +71,14 @@ options:
 
 # Log to the console with defaults
 (venv) $ ubitlogger start
+...
+<data>
+...
+# Hit CTRL-C to stop logging
+^C
+Exited by CTRL-C
+Cleaning up thread
+--> Waiting for thread to finish
 
 # Log to a file
 (venv) $ ubitlogger start > data.log
@@ -109,6 +130,19 @@ usbipd: info: Using IP address 172.21.144.1 to reach the host.
 PS C:\Users\p4irin>
 ```
 
+Listing USB devices will show the micro:bit attached:
+
+```powershell
+PS C:\Users\p4irin> usbipd list --usbids
+
+Connected:
+BUSID  VID:PID  DEVICE                          STATE
+1-1    046d:c534  Logitech, Inc., NanoReceiver  Not shared
+1-3    0d28:0204  NXP, ARM  mbed                Attached
+...
+PS C:\Users\p4irin>
+```
+
 In your WSL distro's terminal, check if the micro:bit is listed:
 
 ```bash
@@ -140,20 +174,6 @@ Cleaning up thread
 
 (venv) $
 ```
-
-Listing USB devices will show the micro:bit attached:
-
-```powershell
-PS C:\Users\p4irin> usbipd list --usbids
-
-Connected:
-BUSID  VID:PID  DEVICE                          STATE
-1-1    046d:c534  Logitech, Inc., NanoReceiver  Not shared
-1-3    0d28:0204  NXP, ARM  mbed                Attached
-...
-PS C:\Users\p4irin>
-```
-
 
 To detach the device from WSL:
 
