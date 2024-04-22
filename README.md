@@ -122,10 +122,11 @@ PS C:\Users\p4irin>
 Attach the USB device to WSL:
 
 ```powershell
-PS C:\Users\p4irin> usbipd attach --wsl --busid 1-3
+PS C:\Users\p4irin> usbipd attach --wsl --busid 1-3 --auto-attach
 
 usbipd: info: Using WSL distribution 'Ubuntu-22.04' to attach; the device will be available in all WSL 2 distributions.
 usbipd: info: Using IP address 172.21.144.1 to reach the host.
+usbipd: info: Starting endless attach loop; press Ctrl+C to quit.
 
 PS C:\Users\p4irin>
 ```
