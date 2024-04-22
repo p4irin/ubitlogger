@@ -16,6 +16,7 @@ keywords = [
 ]
 dependencies = [
   "pyserial >= 3.5",
+  "uflash >= 2.0.0",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",

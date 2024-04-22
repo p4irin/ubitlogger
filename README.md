@@ -47,7 +47,7 @@ x.y.x
 
 # Show help
 (venv) $ ubitlogger -h
-usage: ubitlogger [-h] [-V] {start} ...
+usage: ubitlogger [-h] [-V] {start,flash} ...
 
 micro:bit serial port logger
 
@@ -56,8 +56,15 @@ options:
   -V, --version  show version and exit.
 
 Sub commands:
-  {start}
+  {start,flash}
     start        start logging
+    flash        Flash an example sensor reader script to the micro:bit.
+                 Does NOT work on WSL! On Ubuntu jammy the micro:bit is
+                 NOT auto mounted! You need to mount it like "sudo mount
+                 /dev/<device> /media/MICROBIT" Figure out the <device>
+                 with "sudo fdisk -l". To flash, you need sudo and the
+                 path to ubitlogger! I.e., "sudo venv/bin/ubitlogger
+                 flash -s light", assuming you use a virtualenv venv.
 
 # Show help on start sub command
 (venv) $ ubitlogger start -h
@@ -68,6 +75,15 @@ options:
   -d, --debug           show debugging output
   -t TIMEOUT, --timeout TIMEOUT
                         set a timeout (float)
+
+# Show help on the flash sub command
+(venv) $ ubitlogger flash -h
+usage: ubitlogger flash [-h] -s {temperature,light}
+
+options:
+  -h, --help            show this help message and exit
+  -s {temperature,light}, --sensor {temperature,light}
+                        Specify the sensor to read
 
 # Log to the console with defaults
 (venv) $ ubitlogger start
@@ -82,6 +98,19 @@ Cleaning up thread
 
 # Log to a file
 (venv) $ ubitlogger start > data.log
+
+# Flashing an example script to read a sensor, currently temperature and light.
+# This doesn't work on WSL as we can't mount the micro:bit as a
+# USB mass storage device.
+# On Ubuntu jammy the micro:bit isn't auto mounted.
+# First figure out the device with
+(venv) $ sudo fdisk -l
+# and then mount it like this
+(venv) $ sudo mount /dev/<device> /media/MICROBIT
+
+# Flash a script to the micro:bit that reads the light sensor and sends
+# readings to the serial port.
+(venv) $ sudo venv/bin/ubitlogger flash -s light
 ```
 
 ## Using ubitlogger from a linux distro on WSL 2
