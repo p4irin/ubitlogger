@@ -82,6 +82,12 @@ push = false
 ]
 
 
+[tool.ruff]
+exclude = [
+  "read_sensor*.py",
+]
+
+
 [tool.mypy]
 
 [[tool.mypy.overrides]]
