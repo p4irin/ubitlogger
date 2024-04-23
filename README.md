@@ -105,7 +105,7 @@ Cleaning up thread
 # Log to a file
 (venv) $ ubitlogger start > data.log
 
-# Flashing an example script to read a sensor, currently temperature and light.
+# Flashing an example script to read a sensor (temperature, light, accelerometer and radio).
 # This doesn't work on WSL as we can't mount the micro:bit as a
 # USB mass storage device.
 # On Ubuntu jammy the micro:bit isn't auto mounted.
