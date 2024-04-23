@@ -66,10 +66,20 @@ def cli() -> None:
         '-s',
         '--sensor',
         action='store',
-        choices=['temperature', 'light', 'accelerometer'],
+        choices=['temperature', 'light', 'accelerometer', 'radio'],
         required=True,
         help='Specify the sensor to read'
         )
+    sp_flash.add_argument(
+        '-rg',
+        '--radio-group',
+        action='store',
+        type=int,
+        required=False,
+        help='Specify the "group" the radio should listen on. '
+            + 'A "group" is a number between 0 and 255, inclusive. '
+            + 'The default is 0.'
+    )
 
     args = parser.parse_args()
     kwargs = {}
@@ -85,27 +95,41 @@ def cli() -> None:
             kwargs['interval'] = args.interval
 
     if args.command == 'flash':
-        if args.sensor and 'WSL' not in os.uname().release:
+        if 'WSL' in os.uname().release:
+            print("WSL doesn't support flashing!")
+            exit(1)
+
+        if args.sensor:
             if args.sensor == 'temperature':
                 _function = args.sensor
             if args.sensor == 'light':
                 _function = 'display.read_light_level'
             if args.sensor == 'accelerometer':
                 _function = 'accelerometer.get_values'
+            if args.sensor == 'radio':
+                radio_group = args.radio_group if args.radio_group else 0
+                if radio_group not in range(0, 256):
+                    print('Use a radio-group between 0 and 255, inclusive.')
+                    exit(0)
+                micropython_script_name = 'data_receiver'
+                replace_this = '{% group %}'
+                replace_with = str(radio_group)
+            if args.sensor in ['temperature', 'light', 'accelerometer']:
+                micropython_script_name = 'read_sensor'
+                replace_this = '{% function %}'
+                replace_with = _function
 
             package_dir = os.path.dirname(os.path.abspath(__file__))
-            script_file_path = f'{package_dir}/read_sensor.py'
+            script_file_path = f'{package_dir}/{micropython_script_name}.py'
             script_file_copy_path = script_file_path.replace('.py', '_copy.py')
             with open(script_file_path, 'r') as fh:
                 script = fh.read()
-                script = script.replace('{% function %}', _function)
+                script = script.replace(replace_this, replace_with)
                 with open(script_file_copy_path, 'w') as fh_copy:
                     fh_copy.write(script)
+
             uflash.flash(path_to_python=script_file_copy_path)
             exit(0)
-        else:
-            print("WSL doesn't support flashing!")
-            exit(1)
 
     try:
         ubitlogger = UBitLogger(**kwargs)

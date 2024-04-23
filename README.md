@@ -80,12 +80,16 @@ options:
 
 # Show help on the flash sub command
 (venv) $ ubitlogger flash -h
-usage: ubitlogger flash [-h] -s {temperature,light}
+usage: ubitlogger flash [-h] -s {temperature,light,accelerometer,radio} [-rg RADIO_GROUP]
 
 options:
   -h, --help            show this help message and exit
-  -s {temperature,light,accelerometer}, --sensor {temperature,light,accelerometer}
+  -s {temperature,light,accelerometer,radio}, --sensor {temperature,light,accelerometer,radio}
                         Specify the sensor to read
+  -rg RADIO_GROUP, --radio-group RADIO_GROUP
+                        Specify the "group" the radio should listen on.
+                        A "group" is a number between 0 and 255, inclusive.
+                        The default is 0.
 
 # Log to the console with defaults
 (venv) $ ubitlogger start
@@ -113,6 +117,13 @@ Cleaning up thread
 # Flash a script to the micro:bit that reads the light sensor and sends
 # readings to the serial port.
 (venv) $ sudo venv/bin/ubitlogger flash -s light
+
+# Flash a script to the micro:bit that lets it act like a
+# receiver of data send by other micro:bits. Data received
+# is sent over the serial link to ubitlogger.
+# This example flashes a script that listens on radio group 6.
+(venv) $ sudo venv/bin/ubitlogger flash -s radio -rg 6
+(venv) $ ubitlogger start -d
 ```
 
 ## Using ubitlogger from a linux distro on WSL 2
