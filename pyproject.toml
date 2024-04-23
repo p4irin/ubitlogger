@@ -89,7 +89,12 @@ exclude = [
 
 
 [tool.mypy]
+exclude = [
+  "read_sensor",
+]
 
 [[tool.mypy.overrides]]
-module = "serial.*"
+module = [
+  "serial.*", "uflash",
+]
 ignore_missing_imports = true
