@@ -43,6 +43,13 @@ def cli() -> None:
         type=float,
         help='set a timeout (float)'
     )
+    sp_start.add_argument(
+        '-i',
+        '--interval',
+        action='store',
+        type=int,
+        help='time between readings'
+    )
 
     sp_flash = sub_parsers.add_parser(
         'flash',
@@ -73,8 +80,9 @@ def cli() -> None:
             debug_flag = False
         kwargs['debug'] = debug_flag
         if args.timeout:
-            timeout_flag = args.timeout
-            kwargs['timeout'] = timeout_flag
+            kwargs['timeout'] = args.timeout
+        if args.interval:
+            kwargs['interval'] = args.interval
 
     if args.command == 'flash':
         if args.sensor and 'WSL' not in os.uname().release:

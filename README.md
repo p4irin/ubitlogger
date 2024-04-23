@@ -68,13 +68,15 @@ Sub commands:
 
 # Show help on start sub command
 (venv) $ ubitlogger start -h
-usage: ubitlogger start [-h] [-d] [-t TIMEOUT]
+usage: ubitlogger start [-h] [-d] [-t TIMEOUT] [-i INTERVAL]
 
 options:
   -h, --help            show this help message and exit
   -d, --debug           show debugging output
   -t TIMEOUT, --timeout TIMEOUT
                         set a timeout (float)
+  -i INTERVAL, --interval INTERVAL
+                        time between readings
 
 # Show help on the flash sub command
 (venv) $ ubitlogger flash -h
@@ -82,7 +84,7 @@ usage: ubitlogger flash [-h] -s {temperature,light}
 
 options:
   -h, --help            show this help message and exit
-  -s {temperature,light}, --sensor {temperature,light}
+  -s {temperature,light,accelerometer}, --sensor {temperature,light,accelerometer}
                         Specify the sensor to read
 
 # Log to the console with defaults

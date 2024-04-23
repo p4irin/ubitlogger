@@ -50,6 +50,7 @@ class UBitLogger(object):
             self, handler = None,
             baudrate: int = 115200,
             timeout: float = 0.1,
+            interval: int = 1,
             debug: bool = False,
             block: bool = True
             ) -> None:
@@ -58,6 +59,7 @@ class UBitLogger(object):
         self.handler = handler or self._default_handler
         self._baudrate = baudrate
         self._timeout = timeout
+        self._interval = interval
         self._block = block
         self._serial_port = self._scan()
 
@@ -89,7 +91,7 @@ class UBitLogger(object):
             if self._serial_port.in_waiting > 0:
                 line = self._serial_port.readline().decode('utf-8').strip()
                 self.handler(line)
-            sleep(2)
+            sleep(self._interval)
         self._serial_port.close()
 
     def start(self):
@@ -101,6 +103,7 @@ class UBitLogger(object):
             print(f"Stop bits: {connection.stopbits}")
             print(f"Parity: {connection.parity}")
             print(f"timeout: {connection.timeout}")
+            print(f"interval: {self._interval}")
 
         thread = Thread(target=self._listen, name="listening_thread")
         self._thread = thread
