@@ -59,7 +59,7 @@ def cli() -> None:
         '-s',
         '--sensor',
         action='store',
-        choices=['temperature', 'light'],
+        choices=['temperature', 'light', 'accelerometer'],
         required=True,
         help='Specify the sensor to read'
         )
@@ -82,6 +82,8 @@ def cli() -> None:
                 _function = args.sensor
             if args.sensor == 'light':
                 _function = 'display.read_light_level'
+            if args.sensor == 'accelerometer':
+                _function = 'accelerometer.get_values'
 
             package_dir = os.path.dirname(os.path.abspath(__file__))
             script_file_path = f'{package_dir}/read_sensor.py'
