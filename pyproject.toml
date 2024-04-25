@@ -85,12 +85,14 @@ push = false
 [tool.ruff]
 exclude = [
   "read_sensor*.py",
+  "data_receiver*.py",
 ]
 
 
 [tool.mypy]
 exclude = [
   "read_sensor",
+  "data_receiver",
 ]
 
 [[tool.mypy.overrides]]
