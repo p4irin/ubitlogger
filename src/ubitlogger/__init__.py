@@ -31,8 +31,8 @@ def _exit_gracefully(signum: int, frame) -> None:
     print(f"frame: {frame}")
     exit(1)
 
-signal(SIGINT, handler=_exit_gracefully)
-signal(SIGTERM, handler=_exit_gracefully)
+signal(SIGINT, _exit_gracefully)
+signal(SIGTERM, _exit_gracefully)
 
 _stop_event = Event()
 
