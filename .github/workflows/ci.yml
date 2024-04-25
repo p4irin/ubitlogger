@@ -33,6 +33,6 @@ jobs:
     - name: Lint with ruff
       run: |
         python -m ruff check src
-    - name: Static type checking with mypu
+    - name: Static type checking with mypy
       run: |
         python -m mypy src
