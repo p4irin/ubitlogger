@@ -13,7 +13,7 @@ from serial import Serial
 from serial.tools.list_ports import comports
 
 
-def _exit_gracefully(signum, frame):
+def _exit_gracefully(signum: int, frame) -> None:
     if signum in [2, 15]:
         if signum == 2:
             msg = "\nExited by CTRL-C\n"
@@ -43,11 +43,12 @@ class NoUBitFound(Exception):
 
 class UBitLogger(object):
 
-    _product_id = 516
-    _vendor_id = 3368
+    _product_id: int = 516
+    _vendor_id: int = 3368
 
     def __init__(
-            self, handler = None,
+            self,
+            handler = None,
             baudrate: int = 115200,
             timeout: float = 0.1,
             interval: int = 1,
@@ -63,7 +64,7 @@ class UBitLogger(object):
         self._block = block
         self._serial_port = self._scan()
 
-    def _default_handler(self, line:str):
+    def _default_handler(self, line: str) -> None:
         print(line)
 
     def _scan(self) -> Serial:
@@ -85,7 +86,7 @@ class UBitLogger(object):
                     continue
         raise NoUBitFound
     
-    def _listen(self):
+    def _listen(self) -> None:
         self._serial_port.reset_input_buffer()
         while not _stop_event.is_set():
             if self._serial_port.in_waiting > 0:
@@ -94,7 +95,7 @@ class UBitLogger(object):
             sleep(self._interval)
         self._serial_port.close()
 
-    def start(self):
+    def start(self) -> None:
         if self._debug:
             connection = self._serial_port
             print(f"Listening on port {connection.port}")
@@ -111,5 +112,5 @@ class UBitLogger(object):
         if self._block:
             self._thread.join()
     
-    def stop(self):
+    def stop(self) -> None:
         _stop_event.set()
