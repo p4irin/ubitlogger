@@ -1,3 +1,4 @@
+[![ubitlogger CI](https://github.com/p4irin/ubitlogger/actions/workflows/ci.yml/badge.svg)](https://github.com/p4irin/ubitlogger/actions/workflows/ci.yml)
 ![PyPI - Version](https://img.shields.io/pypi/v/ubitlogger)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ubitlogger)
 ![PyPI - License](https://img.shields.io/pypi/l/ubitlogger)
