@@ -1,5 +1,14 @@
 # type: ignore
 
+"""MicroPython script template used by ubitlogger
+
+Script starts reading a sensor (temperature, light, accelerometer) when
+you hold down the left button until a check mark is displayed on the micro:bit.
+If the right button is pushed and held down until a cross mark displays, the
+micro:bit stops reading the sensor. Readings are send to ubitlogger over the
+serial link.
+"""
+
 from microbit import *
 
 print('start')
