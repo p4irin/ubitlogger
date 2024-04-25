@@ -7,3 +7,4 @@ __pycache__/
 *.egg-info/
 NOTES.md
 src/ubitlogger/read_sensor_copy.py
+src/ubitlogger/data_receiver_copy.py

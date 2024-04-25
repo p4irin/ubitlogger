@@ -1,1 +1,2 @@
 exclude src/ubitlogger/read_sensor_copy.py
+exclude src/ubitlogger/data_receiver_copy.py
